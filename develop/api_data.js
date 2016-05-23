@@ -34,13 +34,20 @@ define({ "api": [
             "optional": false,
             "field": "token",
             "description": "<p>The requested token.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "validFor",
+            "description": "<p>How long the token is valid (in ms)</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response",
-          "content": "HTTP/1.1 200 OK\n{\n  \"token\": \"ey [...] es0-1Qw\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"token\": \"ey [...] es0-1Qw\",\n  \"validFor\": 86400000\n}",
           "type": "json"
         }
       ]
