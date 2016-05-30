@@ -1,6 +1,137 @@
 define({ "api": [
   {
     "type": "post",
+    "url": "/admin/addMoney",
+    "title": "Add money to a user-account",
+    "name": "AddMoney",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "receiver",
+            "description": "<p>The user to whom the money is sent</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "value",
+            "description": "<p>The amount of money in eurocents</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>API-token</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Whether the transaction was successful</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ReceiverNotFound",
+            "description": "<p>The receiving user can't be found / Money is being sent to a terminal-account (not possible)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Fields are missing or the <code>value</code> is not a positive integer</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoTokenProvided",
+            "description": "<p>No token was given (via <code>Query</code> / <code>Body</code>)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthenticated",
+            "description": "<p>The provided token is invalid or expired.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>The user to which the session belongs can't be found.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAdmin",
+            "description": "<p>The user to which the session belongs can't access admin functions</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "ReceiverNotFound",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"ReceiverNotFound\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "BadRequest",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"error\": {\n     \"code\": 400,\n     \"message\": \"BadRequest\"\n   }\n }",
+          "type": "json"
+        },
+        {
+          "title": "NoTokenProvided",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotAuthenticated",
+          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NotAuthenticated\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserNotFound",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"UserNotFound\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotAdmin",
+          "content": "HTTP/1.1 401 Not Authenticated\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NotAdmin\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/api_admin.js",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "/auth/getToken",
     "title": "Request an api-token",
     "name": "GetToken",
@@ -154,7 +285,7 @@ define({ "api": [
       "examples": [
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
@@ -282,7 +413,7 @@ define({ "api": [
         },
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
@@ -495,7 +626,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"newBalance\": 4089 \n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"newBalance\": 4089\n}",
           "type": "json"
         }
       ]
@@ -559,7 +690,7 @@ define({ "api": [
         },
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
@@ -660,7 +791,7 @@ define({ "api": [
       "examples": [
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
@@ -778,7 +909,7 @@ define({ "api": [
         },
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
@@ -884,7 +1015,7 @@ define({ "api": [
       "examples": [
         {
           "title": "NoTokenProvided",
-          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
           "type": "json"
         },
         {
