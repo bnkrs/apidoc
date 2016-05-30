@@ -536,6 +536,12 @@
             "optional": false,
             "field": "EmailMissingInvalid",
             "description": "<p>E-Mail adress is missing or invalid (if email-based recovery is chosen)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UsernameInvalid",
+            "description": "<p>Username contains illegal characters (eg. underscores, spaces)</p>"
           }
         ]
       },
@@ -563,6 +569,11 @@
         {
           "title": "EmailMissingInvalid",
           "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"EmailMissingInvalid\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "UsernameInvalid",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"UsernameInvalid\"\n  }\n}",
           "type": "json"
         }
       ]
