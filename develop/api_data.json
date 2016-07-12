@@ -844,6 +844,13 @@
           {
             "group": "Parameter",
             "type": "String",
+            "optional": true,
+            "field": "email",
+            "description": "<p>To change the e-mail (nescessary for recovery method &quot;email&quot;)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
             "optional": false,
             "field": "token",
             "description": "<p>API-token</p>"
