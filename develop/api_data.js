@@ -1,5 +1,49 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/",
+    "title": "API-Information",
+    "name": "Info",
+    "group": "0",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "app",
+            "description": "<p>The name of the backend-app</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "version",
+            "description": "<p>The backend-version</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Various configuration parameters (see Example)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "HTTP/1.1 200 OK\n{\n  \"app\": \"bnk-core\",\n  \"version\": \"1.5.2-r3\",\n  \"config\": {\n    \"zxcvbn_minScore\": 4\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/api.js",
+    "groupTitle": "0"
+  },
+  {
     "type": "post",
     "url": "/admin/addMoney",
     "title": "Add money to a user-account",
