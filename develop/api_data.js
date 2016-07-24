@@ -218,6 +218,90 @@ define({ "api": [
     "groupTitle": "Auth"
   },
   {
+    "type": "post",
+    "url": "/auth/revoke_tokens",
+    "title": "Revoke all Tokens",
+    "name": "RevokeTokens",
+    "group": "Auth",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Whether the revocation of all issued was successfull</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/api_auth.js",
+    "groupTitle": "Auth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>API-token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoTokenProvided",
+            "description": "<p>No token was given (via <code>Query</code> / <code>Body</code>)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthenticated",
+            "description": "<p>The provided token is invalid or expired.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>The user to which the session belongs can't be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "NoTokenProvided",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"NoTokenProvided\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotAuthenticated",
+          "content": "HTTP/1.1 401 Not Authorized\n{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"NotAuthenticated\"\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserNotFound",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"UserNotFound\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
     "type": "get",
     "url": "/user/balance",
     "title": "Get the users current balance",
